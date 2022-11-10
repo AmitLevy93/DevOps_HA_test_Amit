@@ -19,6 +19,7 @@ pipeline {
                 println('Part 2 - build and push docker container into Dockerhub ...')
                 batchFile(
                     '''
+                    
                     '''
                     )
             }
