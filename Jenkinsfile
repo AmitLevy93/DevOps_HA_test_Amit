@@ -21,12 +21,13 @@ pipeline {
                     '''
                     cd python_flask_docker
                     ::create docker image from Dockerfile:
-                    docker build -t python_flask_docker .
+                    docker image build -t python_flask_docker .
                     ::list of docker images installed locally:
                     docker image ls
-                    ::NOT WORKING YET (tried on cmd and got an id):
+                    ::creat a container from the image and run it:
                     docker run -p 5000:5000 -d python_flask_docker
-                    docker ps -a
+                    ::list of all running containers:
+                    docker ps
                     '''
                     )
             }

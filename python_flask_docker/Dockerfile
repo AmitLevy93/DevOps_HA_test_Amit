@@ -14,4 +14,5 @@ RUN pip install -r requirements.txt
 COPY . /app
 
 # Run flask_web_app.py when the container launches
-CMD "python3 flask_web_app.py"
+ENTRYPOINT ["python"]
+CMD ["flask_web_app.py"]
