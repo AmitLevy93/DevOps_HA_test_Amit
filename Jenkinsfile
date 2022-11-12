@@ -34,7 +34,7 @@ pipeline {
                 batchFile(
                     '''
                     ::Login to DockerHub:
-                    docker login
+                    docker login --username=amit93levy --password=<your-password>
                     ::---add username and password (encrypted)---
                     ::Push docker image into DockerHub:
                     docker tag python_flask_docker amit93levy/python_flask_docker
