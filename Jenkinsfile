@@ -16,20 +16,32 @@ pipeline {
                     )
                 /* Build docker container of python with flask
                    (simple web app that talks the local docker engine) */
-                println('Part 2 - build and push docker container into Dockerhub ...')
+                println('Part 2 - build docker image and run a container ...')
                 batchFile(
                     '''
                     cd python_flask_docker
-                    ::create docker image from Dockerfile:
+                    ::Create docker image from Dockerfile:
                     docker image build -t python_flask_docker .
-                    ::list of docker images installed locally:
+                    ::List of docker images installed locally:
                     docker image ls
-                    ::creat a container from the image and run it:
+                    ::Creat a container from the image and run it:
                     docker run -p 5000:5000 -d python_flask_docker
-                    ::list of all running containers:
+                    ::List of all running containers:
                     docker ps
                     '''
                     )
+                println('Part 3 - push docker image into Dockerhub ...')
+                batchFile(
+                    '''
+                    ::Login to DockerHub:
+                    docker login
+                    ::---add username and password (encrypted)---
+                    ::Push docker image into DockerHub:
+                    docker tag python_flask_docker amit93levy/python_flask_docker
+                    docker push amit93levy/python_flask_docker
+                    '''
+                )
+                println('Go to: https://hub.docker.com/repository/docker/amit93levy/python_flask_docker')
             }
         }
         stage('Job 2 - Nginx docker file') {
