@@ -99,7 +99,7 @@ pipeline {
                 echo 'Testing....'
                 bat
                 '''
-                curl --version
+                curl http://localhost:5001/app
                 '''
             }
         }
