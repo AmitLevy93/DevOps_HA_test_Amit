@@ -10,6 +10,7 @@ SECRET_KEY = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
 
 
 @app.route('/', methods=['POST', 'GET'])
+@app.route('/app', methods=['POST', 'GET'])
 def home():
     if SECRET_KEY:
         return "I am running from a Docker container"
