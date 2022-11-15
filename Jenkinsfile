@@ -10,10 +10,10 @@ pipeline {
                 echo 'Stage 1: pulling code from Github repo ...'
                 batch(
                 '''
-                ::git init
-                ::git remote add origin https://github.com/AmitLevy93/DevOps_HA_test_Amit.git
-                ::git status
-                ::git pull origin master
+                git init
+                git remote add origin https://github.com/AmitLevy93/DevOps_HA_test_Amit.git
+                git status
+                git pull origin master
                 '''
                 )
                 //git credentialsId: 'git_credentials', url: 'https://github.com/AmitLevy93/DevOps_HA_test_Amit.git'
