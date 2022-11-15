@@ -84,7 +84,9 @@ pipeline {
             steps {
                 echo 'Running the first container ....'
                 bat '''
-                docker run -d --name python_flask_container_2 -p 5000:5000 python_flask_docker
+                docker rm -f nginx-base
+                docker rm -f python_flask_container
+                docker run -d --name python_flask_container -p 5000:5000 python_flask_docker
                 '''
             }
         }
@@ -92,7 +94,7 @@ pipeline {
             steps {
                 echo 'Running the Second container ....'
                 bat '''
-                docker run -d --name nginx_proxy_container_2 -p 5001:80 nginx-proxy
+                docker run -d --name nginx_proxy_container -p 5001:80 nginx-proxy
                 '''
             }
         }
