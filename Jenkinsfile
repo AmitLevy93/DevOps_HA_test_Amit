@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        DH_CREDS = credentials('dockerhub')
+    }
     stages {
         stage('Job 1 - Stage 1') {
             steps {
@@ -42,7 +44,8 @@ pipeline {
                 bat
                 '''
                 ::Login to DockerHub:
-                docker login --username=amit93levy --password=<your-password>
+                ::docker login --username=<your-username> --password=<your-password>
+                docker login --username=%DH_CREDS_USR% --password=%DH_CREDS_PSW%
                 ::---add username and password (encrypted)---
                 ::Push docker image into DockerHub:
                 docker tag python_flask_docker amit93levy/python_flask_docker
