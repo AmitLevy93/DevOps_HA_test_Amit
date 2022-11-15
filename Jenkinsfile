@@ -12,8 +12,8 @@ pipeline {
                 '''
                 ::git init
                 ::git remote add origin https://github.com/AmitLevy93/DevOps_HA_test_Amit.git
-                git status
-                git pull origin master
+                ::git status
+                ::git pull origin master
                 '''
                 )
             }
