@@ -23,7 +23,7 @@ pipeline {
                 /* Build docker container of python with flask
                    (simple web app that talks the local docker engine) */
                 echo 'Stage 2 - build docker image and run a container ...'
-                bat
+                batch(
                 '''
                 cd python_flask_docker
                 ::Create docker image from Dockerfile:
@@ -37,12 +37,13 @@ pipeline {
                 ::back to main project's directory:
                 cd ..
                 '''
+                )
             }
         }
         stage('Job 1 - Stage 3') {
             steps {
                 echo 'Stage 3 - push docker image into Dockerhub ...'
-                bat
+                batch(
                 '''
                 ::Login to DockerHub:
                 ::docker login --username=<your-username> --password=<your-password>
@@ -52,12 +53,13 @@ pipeline {
                 docker tag python_flask_docker amit93levy/python_flask_docker
                 docker push amit93levy/python_flask_docker
                 '''
+                )
                 echo 'Go to: https://hub.docker.com/repository/docker/amit93levy/python_flask_docker'
             }
         }
         stage('Job 2 - Nginx docker file') {
             steps {
-                bat
+                bat(
                 '''
                 cd nginx_reverse_proxy
                 docker images
@@ -77,34 +79,38 @@ pipeline {
                 ::Make a new docker image called "nginx-proxy" from the nginx container:
                 docker commit nginx-base nginx-proxy
                 '''
+                )
                 echo 'go to: http://localhost:5001/app or http://localhost:5001'
             }
         }
         stage('Job 3 - Stage 1') {
             steps {
                 echo 'Running the first container ....'
-                bat
+                batch(
                 '''
                 docker run -d --name python_flask_container -p 5000:5000 python_flask_docker
                 '''
+                )
             }
         }
         stage('Job 3 - Stage 2') {
             steps {
                 echo 'Running the Second container ....'
-                bat
+                batch(
                 '''
                 docker run -d --name nginx_proxy_container -p 5001:80 nginx-proxy
                 '''
+                )
             }
         }
         stage('Job 3 - Stage 3') {
             steps {
                 echo 'Testing....'
-                bat
+                bat(
                 '''
                 curl http://localhost:5001/app
                 '''
+                )
             }
         }
     }
