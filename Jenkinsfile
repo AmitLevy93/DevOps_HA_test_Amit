@@ -8,14 +8,15 @@ pipeline {
             steps {
                 /* Pull code from Github repo */
                 echo 'Stage 1: pulling code from Github repo ...'
-                batch(
-                '''
-                ::git init
-                ::git remote add origin https://github.com/AmitLevy93/DevOps_HA_test_Amit.git
-                ::git status
-                ::git pull origin master
-                '''
-                )
+                //batch(
+                //'''
+                //::git init
+                //::git remote add origin https://github.com/AmitLevy93/DevOps_HA_test_Amit.git
+                //::git status
+                //::git pull origin master
+                //'''
+                //)
+                git credentialsId: 'git_credentials', url: 'https://github.com/AmitLevy93/DevOps_HA_test_Amit.git'
             }
         }
         stage('Job 1 - Stage 2') {
