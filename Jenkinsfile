@@ -8,13 +8,14 @@ pipeline {
             steps {
                 /* Pull code from Github repo */
                 echo 'Stage 1: pulling code from Github repo ...'
-                bat
+                batch(
                 '''
                 git init
                 git remote add origin https://github.com/AmitLevy93/DevOps_HA_test_Amit.git
                 git status
                 git pull origin master
                 '''
+                )
             }
         }
         stage('Job 1 - Stage 2') {
