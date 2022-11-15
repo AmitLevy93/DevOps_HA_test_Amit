@@ -24,15 +24,15 @@ pipeline {
                 echo 'Stage 2 - build docker image and run a container ...'
                 bat '''
                 cd python_flask_docker
-                ::Create docker image from Dockerfile:
+                echo "Create docker image from Dockerfile:"
                 docker image build -t python_flask_docker .
-                ::List of docker images installed locally:
+                echo "List of docker images installed locally:"
                 docker image ls
-                ::Creat a container from the image and run it:
+                echo "Creat a container from the image and run it:"
                 docker run -d --name python_flask_container -p 5000:5000 python_flask_docker
-                ::List of all running containers:
+                echo "List of all running containers:"
                 docker ps
-                ::back to main project's directory:
+                echo "back to main project's directory:"
                 cd ..
                 echo 'check'
                 '''
@@ -42,11 +42,11 @@ pipeline {
             steps {
                 echo 'Stage 3 - push docker image into Dockerhub ...'
                 bat '''
-                ::Login to DockerHub:
+                echo "Login to DockerHub:"
                 ::docker login --username=<your-username> --password=<your-password>
                 docker login --username=%DH_CREDS_USR% --password=%DH_CREDS_PSW%
                 ::---add username and password (encrypted)---
-                ::Push docker image into DockerHub:
+                echo "Push docker image into DockerHub:"
                 docker tag python_flask_docker amit93levy/python_flask_docker
                 docker push amit93levy/python_flask_docker
                 '''
@@ -59,19 +59,19 @@ pipeline {
                 cd nginx_reverse_proxy
                 docker images
                 docker ps
-                ::Pull the latest nginx image from dockerhub and run it:
+                echo "Pull the latest nginx image from dockerhub and run it:"
                 docker run -d --name nginx-base -p 5001:80 nginx:latest
-                ::Copy the file default.conf from nginx container to nginx_reverse_proxy local directory:
+                echo "Copy the file default.conf from nginx container to nginx_reverse_proxy local directory:"
                 docker cp nginx-base:/etc/nginx/conf.d/default.conf .
-                ::Add proxy pass to default.conf
+                echo "Add proxy pass to default.conf"
                 type add_proxy_pass_to_conf_file.txt > default.conf
-                ::Copy the local default.conf file to its location inside the container:
+                echo "Copy the local default.conf file to its location inside the container:"
                 docker cp default.conf nginx-base:/etc/nginx/conf.d/
-                ::Testing/validating the file inside the container:
+                echo "Testing/validating the file inside the container:"
                 docker exec nginx-base nginx -t
-                ::Reload the file inside the container:
+                "Reload the file inside the container:"
                 docker exec nginx-base nginx -s reload
-                ::Make a new docker image called "nginx-proxy" from the nginx container:
+                "Make a new docker image called "nginx-proxy" from the nginx container:"
                 docker commit nginx-base nginx-proxy
                 '''
                 echo 'go to: http://localhost:5001/app or http://localhost:5001'
