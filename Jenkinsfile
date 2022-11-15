@@ -37,6 +37,7 @@ pipeline {
                 docker ps
                 ::back to main project's directory:
                 cd ..
+                echo 'check'
                 '''
                 )
             }
