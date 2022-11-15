@@ -46,7 +46,7 @@ pipeline {
                 ::docker login --username=<your-username> --password=<your-password>
                 docker login --username=%DH_CREDS_USR% --password=%DH_CREDS_PSW%
                 ::---add username and password (encrypted)---
-                echo "Push docker image into DockerHub:"
+                echo "Push python docker image into DockerHub:"
                 docker tag python_flask_docker amit93levy/python_flask_docker
                 docker push amit93levy/python_flask_docker
                 '''
@@ -73,6 +73,9 @@ pipeline {
                 docker exec nginx-base nginx -s reload
                 "Make a new docker image called "nginx-proxy" from the nginx container:"
                 docker commit nginx-base nginx-proxy
+                echo "Push nginx-proxy docker image into DockerHub:"
+                docker tag nginx-proxy amit93levy/nginx-proxy
+                docker push amit93levy/nginx-proxy
                 '''
                 echo 'go to: http://localhost:5001/app or http://localhost:5001'
             }
